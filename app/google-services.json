@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "119248103598",
+    "project_id": "community-ai-hack",
+    "storage_bucket": "community-ai-hack.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119248103598:android:4402896b9538dac3b5a53f",
+        "android_client_info": {
+          "package_name": "com.example.communityai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119248103598-h0c095j2a7vha7lo78iaoo4auptobffp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.communityai",
+            "certificate_hash": "a4da5eb46f9077cf4262981f72deacc25cc49846"
+          }
+        },
+        {
+          "client_id": "119248103598-08pnj7bs1ea2vo61qqk1r8lkijqph0eh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWeu3r6oQ1Lj2brpn7JwnUnmFLgFdq3AQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119248103598-08pnj7bs1ea2vo61qqk1r8lkijqph0eh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
