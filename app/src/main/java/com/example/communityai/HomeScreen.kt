@@ -12,11 +12,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -26,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -38,7 +41,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -51,16 +56,17 @@ fun HomeScreen(
     chatViewModel: ChatViewModel,
     modifier: Modifier = Modifier
 ) {
-
+    val lazyListState = rememberLazyListState()
     val userData = viewModel.userData.collectAsState()
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFF36393F))
     ) {
-        LazyColumn(modifier = Modifier.weight(1f)) {
+        LazyColumn(
+            state = lazyListState,
+            modifier = Modifier.weight(1f)) {
             items(chatViewModel.messages) { message ->
-                MessageItem(message)
+                MessageItem(viewModel = viewModel, message = message)
             }
         }
     }
@@ -69,7 +75,9 @@ fun HomeScreen(
 @Composable
 fun ChatBottomBar(
     chatViewModel: ChatViewModel,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
+
     var textFieldValue by remember { mutableStateOf("") }
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -101,18 +109,33 @@ fun ChatBottomBar(
                     chatViewModel.sendMessage(textFieldValue)
                     textFieldValue = ""
                 }
+
             },
             colors = IconButtonDefaults.iconButtonColors(
                 containerColor = MaterialTheme.colorScheme.surfaceDim,
-                contentColor = MaterialTheme.colorScheme.surfaceDim
-            )
+            ),
+            modifier = Modifier.size(50.dp)
         ) {
             Icon(
-                painter = painterResource(R.drawable.ic_launcher_background),
-                contentDescription = "Send"
+                painter = painterResource(R.drawable.send_svgrepo_com),
+                contentDescription = "Send",
+                tint = Color.Black.copy(alpha = .5f),
+                modifier = Modifier.size(25.dp)
             )
         }
 
     }
 }
 
+@Composable
+fun ChatTopBar(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxWidth()
+    ){
+        Text(
+            text = "Chatting Room",
+            modifier = Modifier.align(Alignment.Center).padding(12.dp),
+            fontWeight = FontWeight.Bold
+        )
+    }
+}

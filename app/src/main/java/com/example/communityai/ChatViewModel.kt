@@ -47,7 +47,6 @@ class ChatViewModel : ViewModel() {
             senderName = user.displayName ?: "Anonymous"
         )
 
-        // Push message to Firebase
         messagesRef.push().setValue(message)
     }
 }

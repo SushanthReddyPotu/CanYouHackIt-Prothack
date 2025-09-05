@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -31,8 +32,15 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    containerColor = MaterialTheme.colorScheme.background,
+                    containerColor = Color.White,
                     contentColor = MaterialTheme.colorScheme.onBackground,
+                    topBar = {
+                        Surface(
+                            shadowElevation = 2.dp
+                        ) {
+                            ChatTopBar(modifier = Modifier.statusBarsPadding())
+                        }
+                    },
                     bottomBar = {
                         Surface(
                             shadowElevation = 2.dp
@@ -56,7 +64,8 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(
                                 viewModel = authViewModel,
                                 chatViewModel,
-                                modifier = Modifier.padding(padding))
+                                modifier = Modifier.statusBarsPadding().padding(padding)
+                            )
                         }
                     }
                 }

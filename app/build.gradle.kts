@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation("io.coil-kt:coil-compose:2.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.6")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
     implementation(libs.androidx.core.ktx)
