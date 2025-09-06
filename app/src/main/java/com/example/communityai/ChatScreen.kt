@@ -1,5 +1,6 @@
 package com.example.communityai
 
+import android.util.Log
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -139,10 +141,14 @@ fun MessageItem(
                         LaunchedEffect(message.text) {
                             response = chatViewModel.requestSummary(message.text)
                         }
-                        Box(
-                            modifier = Modifier.padding(24.dp)
-                        ) {
-                            Text(response ?: "Loading...")
+                        LazyColumn {
+                            item {
+                                Box(
+                                    modifier = Modifier.padding(24.dp)
+                                ) {
+                                    Text(response ?: "Loading...")
+                                }
+                            }
                         }
                     }
                 }
@@ -160,11 +166,20 @@ fun MessageItem(
                         Spacer(modifier = Modifier.padding(2.dp))
                         LaunchedEffect(message.text) {
                             response = chatViewModel.analyzeSentiment(message.text)
+                            Log.d("SentimentAnalysis", "Response: $response")
                         }
-                        Box(
-                            modifier = Modifier.padding(24.dp)
-                        ) {
-                            Text(response?.sentiment ?: "Loading...")
+                        LazyColumn {
+                            item {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().padding(24.dp)
+                                ) {
+                                    Text(
+                                        text = " ${response?.label}",
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = Modifier.align(Alignment.Center)
+                                    )
+                                }
+                            }
                         }
                     }
 

@@ -44,8 +44,13 @@ class MainActivity : ComponentActivity() {
                         Surface(
                             shadowElevation = 2.dp
                         ) {
-                            ChatTopBar(modifier = Modifier.statusBarsPadding())
+                            ChatTopBar(
+                                navController = navController,
+                                viewModel = authViewModel,
+                                modifier = Modifier.statusBarsPadding()
+                            )
                         }
+
                     },
                     bottomBar = {
                         if ( currentDestination?.route == "homeScreen" )

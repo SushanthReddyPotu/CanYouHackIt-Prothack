@@ -16,4 +16,4 @@ data class SummaryRequest(val text: String)
 data class SummaryResponse(val summary: String)
 
 data class SentimentRequest(val text: String)
-data class SentimentResponse(val sentiment: String, val score: Float)
+data class SentimentResponse(val label: String, val score: Float)

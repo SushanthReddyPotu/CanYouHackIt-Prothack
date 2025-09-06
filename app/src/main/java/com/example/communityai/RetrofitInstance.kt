@@ -13,7 +13,7 @@ val okHttpClient = OkHttpClient.Builder()
     .build()
 
 val retrofit = Retrofit.Builder()
-    .baseUrl("https://tjhiq-103-199-188-242.a.free.pinggy.link")
+    .baseUrl("https://wnqsi-103-199-188-242.a.free.pinggy.link")
     .client(okHttpClient)
     .addConverterFactory(GsonConverterFactory.create())
     .build()
