@@ -1,0 +1,39 @@
+# Core scientific stack
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+seaborn
+
+# Deep learning frameworks (GPU builds)
+torch
+torchvision
+torchaudio
+tensorflow
+
+# Hugging Face ecosystem
+transformers
+datasets
+evaluate
+accelerate
+
+# Boosting & optimization
+xgboost
+lightgbm
+catboost
+optuna
+
+# Jupyter environment
+notebook
+jupyterlab
+ipykernel
+
+
+torch
+torchvision
+torchaudio
+transformers
+sentence-transformers
+scikit-learn
+python-dotenv
