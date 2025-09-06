@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.communityai.ui.theme.AppTheme
 
@@ -29,12 +31,16 @@ class MainActivity : ComponentActivity() {
             val authViewModel = viewModel<AuthViewModel>()
             val chatViewModel = viewModel<ChatViewModel>()
             val navController = rememberNavController()
+
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
             AppTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     containerColor = Color.White,
                     contentColor = MaterialTheme.colorScheme.onBackground,
                     topBar = {
+                        if ( currentDestination?.route == "homeScreen" )
                         Surface(
                             shadowElevation = 2.dp
                         ) {
@@ -42,6 +48,7 @@ class MainActivity : ComponentActivity() {
                         }
                     },
                     bottomBar = {
+                        if ( currentDestination?.route == "homeScreen" )
                         Surface(
                             shadowElevation = 2.dp
                         ) {
@@ -64,7 +71,7 @@ class MainActivity : ComponentActivity() {
                             HomeScreen(
                                 viewModel = authViewModel,
                                 chatViewModel,
-                                modifier = Modifier.statusBarsPadding().padding(padding)
+                                modifier = Modifier.padding(padding)
                             )
                         }
                     }

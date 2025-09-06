@@ -2,6 +2,7 @@ package com.example.communityai
 
 import android.R.attr.padding
 import android.transition.ChangeTransform
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,14 +35,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -56,8 +61,18 @@ fun HomeScreen(
     chatViewModel: ChatViewModel,
     modifier: Modifier = Modifier
 ) {
-    val lazyListState = rememberLazyListState()
-    val userData = viewModel.userData.collectAsState()
+    BackHandler {
+        viewModel.signOut()
+    }
+    val lazyListState = rememberLazyListState().rememberToAutoScroll()
+
+    LaunchedEffect(chatViewModel.messages.size) {
+        if (chatViewModel.messages.isNotEmpty()) {
+            lazyListState.animateScrollToItem(chatViewModel.messages.size - 1)
+        }
+    }
+
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -66,7 +81,10 @@ fun HomeScreen(
             state = lazyListState,
             modifier = Modifier.weight(1f)) {
             items(chatViewModel.messages) { message ->
-                MessageItem(viewModel = viewModel, message = message)
+                MessageItem(
+                    viewModel = viewModel, message = message,
+                     chatViewModel = chatViewModel
+                )
             }
         }
     }
@@ -77,8 +95,9 @@ fun ChatBottomBar(
     chatViewModel: ChatViewModel,
     modifier: Modifier = Modifier
 ) {
-
+    val keyboardController = LocalSoftwareKeyboardController.current
     var textFieldValue by remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -108,6 +127,7 @@ fun ChatBottomBar(
                 if (textFieldValue.isNotBlank()) {
                     chatViewModel.sendMessage(textFieldValue)
                     textFieldValue = ""
+                    focusManager.clearFocus()
                 }
 
             },
@@ -138,4 +158,16 @@ fun ChatTopBar(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Bold
         )
     }
+}
+
+@Composable
+fun LazyListState.rememberToAutoScroll(): LazyListState {
+
+    LaunchedEffect(this) {
+        if (layoutInfo.totalItemsCount > 0) {
+            scrollToItem(layoutInfo.totalItemsCount - 1)
+        }
+    }
+
+    return this
 }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -24,6 +25,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -67,9 +69,9 @@ fun GoogleSignInScreen(
         ) {
 
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_background),
+                painter = painterResource(id = R.drawable.chatgpt_image_sep_6__2025__03_07_18_am),
                 contentDescription = "App Logo",
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier.size(100.dp).clip(shape = RoundedCornerShape(12.dp))
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -93,7 +95,7 @@ fun GoogleSignInScreen(
 
             Button(
                 onClick = { viewModel.signInWithGoogle() },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier,
                 enabled = !isLoading
             ) {
                 if (isLoading) {
@@ -103,7 +105,7 @@ fun GoogleSignInScreen(
                     )
                 } else {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                        painter = painterResource(id = R.drawable.icons8_google),
                         contentDescription = "Google",
                         modifier = Modifier.size(20.dp)
                     )
